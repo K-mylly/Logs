@@ -177,5 +177,14 @@ struct Persistence {
         }
         return projectFolder.appending(path: path)
     }
-    
+    static func saveIfEmpty(model: [String], filename: String) {
+        do {
+            let files = try Persistence.listContents(folder: "")
+            if !files.contains(filename) {
+                try Persistence.savePlainText(content: model, path: filename)
+            }
+        } catch {
+            print("saveIfEmpty error: ", error)
+        }
+    }
 }
